@@ -51,7 +51,7 @@ class String
   end
 end
 
-theme_name = File.basename(ARGV.first, '.dvtcolortheme')
+theme_name = File.basename(ARGV.first, '.dvtcolortheme').gsub(/[%() ]/, '')
 
 plist = Plist::parse_xml(ARGV.first)
 bg = plist['DVTSourceTextBackground']

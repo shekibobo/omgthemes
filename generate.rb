@@ -56,7 +56,7 @@ end
 
 json = Dir["**/*.dvtcolortheme"].sort_by{|fn| File.mtime(fn) }.reverse.map do |theme|
   user = theme.split('/').first
-  name = theme.stem.gsub(' ', '')
+  name = theme.stem
   fn = "#{user}_#{name}"  # spaces in filenames suck
   dst = "#{out}/#{fn}.dvtcolortheme"
 
