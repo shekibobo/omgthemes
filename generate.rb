@@ -53,24 +53,23 @@ GitHub.forks do |fork|
   end
 end
 
-json = Dir['*'].map do |user|
-  next if user == '.' or user == '..'
 
-  Dir["#{user}/**/*.dvtcolortheme"].map do |theme|
-    name = theme.stem.gsub(' ', '')
-    fn = "#{user}_#{name}"  # spaces in filenames suck
-    dst = "#{out}/#{fn}.dvtcolortheme"
-    cp theme, dst
-    system "ruby ../parse-dvtcolortheme.rb \"#{dst}\" > \"#{out}/#{fn}.css\""
+json = Dir["**/*.dvtcolortheme"].sort_by{|fn| File.mtime(fn) }.reverse.map do |theme|
+  user = theme.split('/').first
+  name = theme.stem.gsub(' ', '')
+  fn = "#{user}_#{name}"  # spaces in filenames suck
+  dst = "#{out}/#{fn}.dvtcolortheme"
 
-    theme =~ %r{#{user}/(.*)}
-    {
-      fork: user,
-      name: name,
-      raw:  $1
-    }
-  end
-end.flatten
+  cp theme, dst
+  system "ruby ../parse-dvtcolortheme.rb \"#{dst}\" > \"#{out}/#{fn}.css\""
+
+  theme =~ %r{#{user}/(.*)}
+  {
+    fork: user,
+    name: name,
+    raw:  $1
+  }
+end
 
 File.open("#{out}/themes.json", 'w') do |f|
   f.write(JSON.fast_generate(json))
