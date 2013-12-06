@@ -61,7 +61,14 @@ puts <<-EOS
   color: #{plist['DVTSourceTextSyntaxColors']['xcode.syntax.plain'].rgba};
   border-color: #{bg.border};
 }
+.#{theme_name} code i::selection, .#{theme_name} code::selection {
+  background: #{plist['DVTSourceTextSelectionColor'].rgba};
+}
 EOS
+
+# the ::selection selector above doesn't work well for me
+# if I make it operate just on .theme_name it doesn't work
+# at all!
 
 plist.fetch('DVTSourceTextSyntaxColors').each do |key, value|
   key = key.sub(/^xcode\.syntax\./, '')

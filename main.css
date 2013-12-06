@@ -34,3 +34,40 @@ pre i { font-style: normal;}
 a.inherit {
   color: inherit;
 }
+
+.warning, .error {
+    position: relative;
+}
+.warning {
+    background: rgba(251,255,0,0.15);
+}
+
+.warning:after {
+    background: #FFE172;
+}
+
+.error {
+    background: rgba(255,0,0,0.15);
+}
+
+.warning, .error {
+    position: relative;
+}
+
+.error:after, .warning:after {
+    position: absolute;
+    right: 0;
+    color: black;
+    padding: 0 1em;
+    font: 10px/18px "Lucida Sans", Helvetica;
+}
+.error:after {
+    width: 25em;
+    background: #FF937C;
+    content: "Use of undeclared identifier 'venue'";
+}
+.warning:after {
+    width: 15em;
+    background: #FFE172;
+    content: "Unused variable 'bar'";
+}
