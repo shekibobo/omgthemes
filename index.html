@@ -17,7 +17,7 @@
 
         <i class='preprocessor'>#import</i> <i class='string'>&lt;UIKit/UIKit.h&gt;</i>
 
-        <i class='keyword'>@interface</i> <%- name %>Theme : <i class=class>NSObject</i> {
+        <i class='keyword'>@interface</i> <%- camelname %>Theme : <i class=class>NSObject</i> {
             <i class='class'>NSString</i> *ivar;
         }
 
@@ -27,7 +27,7 @@
         <i class='keyword'>@end</i>
 
 
-        <i class='keyword'>@implementation</i> <%- name %>Theme
+        <i class='keyword'>@implementation</i> <%- camelname %>Theme
 
         - (<i class='class'>NSString</i> *)method:(<i class='keyword'>id</i>)parameter {
             <i class='ivar'>ivar</i> = parameter;
@@ -58,6 +58,7 @@
         theme.url = 'https://github.com/' + theme.fork + '/omgthemes/blob/master/' + encodeURI(theme.raw);
         theme.raw = 'https://raw.github.com/' + theme.fork + '/omgthemes/master/' + encodeURI(theme.raw);
         theme.css = name.replace(/[%() ]/g, '');  // need a valid selector name
+        theme.camelname = theme.name.replace(/[^a-zA-Z0-9_]/g, '');
 
         $('<link>').appendTo($('head')).attr({type: 'text/css', rel: 'stylesheet'}).attr('href', css);
         $('body').append(templater(theme));
